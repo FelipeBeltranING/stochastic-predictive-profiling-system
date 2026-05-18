@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <form action="/procesar" method="POST">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" name="username" placeholder="Nombre de usuario" required><br><br>
+        <input type="password" name="password" placeholder="Contraseña" required><br><br>
+        <button type="submit">Ingresar</button>
+    </form>
+</body>
+</html>
