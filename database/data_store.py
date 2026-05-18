@@ -107,3 +107,27 @@ publicidad = {
     9: {"imagen": "anuncio_arte.jpg", "tags": ["arte"], "prioridad_base": 0.5},
     10: {"imagen": "anuncio_jardin.jpg", "tags": ["jardin"], "prioridad_base": 0.5},
 }
+
+
+def update_user_profile(username, search_tags, boost=0.05):
+    """
+    Actualiza el perfil del usuario basándose en los tags de la búsqueda.
+    - Los tags buscados reciben un incremento (boost)
+    - Los tags no buscados sufren un leve decaimiento
+    - Los valores se mantienen en el rango [0, 1]
+
+    Args:
+        username (str): Nombre de usuario
+        search_tags (list): Tags relacionados con la búsqueda
+        boost (float): Incremento para tags buscados
+    """
+    if username not in usuarios:
+        return
+
+    perfil = usuarios[username]["perfil"]
+
+    for tag in perfil:
+        if tag in search_tags:
+            perfil[tag] = min(1.0, perfil[tag] + boost)
+        else:
+            perfil[tag] = max(0.0, perfil[tag] - boost * 0.1)
