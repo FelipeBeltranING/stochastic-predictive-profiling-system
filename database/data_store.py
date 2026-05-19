@@ -50,9 +50,9 @@ usuarios = {
             "jardin": 0.0
         }
     },
-    "panneso": {
-        "nombre": "Panneso",
-        "password": "pann2024",
+    "panesso": {
+        "nombre": "Panesso",
+        "password": "pane2024",
         "perfil": {
             "hogar": 0.95,
             "jardin": 0.85,
@@ -69,7 +69,7 @@ usuarios = {
 }
 
 
-# Productos / Servicios
+# Productos 
 
 productos = {
     1: {"nombre": "Laptop Gamer", "tags": ["electronica", "juegos"], "precio": 1200},
@@ -93,7 +93,7 @@ productos = {
 }
 
 
-# Publicidad (imágenes)
+# Publicidad
 
 publicidad = {
     1: {"imagen": "anuncio_electronica.jpg", "tags": ["electronica"], "prioridad_base": 0.5},
@@ -107,3 +107,16 @@ publicidad = {
     9: {"imagen": "anuncio_arte.jpg", "tags": ["arte"], "prioridad_base": 0.5},
     10: {"imagen": "anuncio_jardin.jpg", "tags": ["jardin"], "prioridad_base": 0.5},
 }
+
+
+def update_user_profile(username, search_tags, boost=0.05):
+    if username not in usuarios:
+        return
+
+    perfil = usuarios[username]["perfil"]
+
+    for tag in perfil:
+        if tag in search_tags:
+            perfil[tag] = min(1.0, perfil[tag] + boost)
+        else:
+            perfil[tag] = max(0.0, perfil[tag] - boost * 0.1)

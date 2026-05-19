@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Resultados: {{ query }} — Sistema de Perfilado{% endblock %}
+{% block body %}
+<div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+        <a href="/dashboard" class="logo">🔍 Sistema de Perfilado</a>
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="q" value="{{ query }}" placeholder="Buscar productos..." class="search-input"
+                autocomplete="off">
+            <button type="submit" class="btn btn-search">Buscar</button>
+        </form>
+        <div class="header-right">
+            <span class="user-badge">👤 {{ nombre }}</span>
+            <a href="/logout" class="btn btn-logout">Salir</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-simple">
+        <div class="results-header">
+            <h2>Resultados para "{{ query }}"</h2>
+            <p class="results-count">{{ results | length }} producto{{ 's' if results | length != 1 }} encontrado{{ 's'
+                if results | length != 1 }} · Rankeados con <strong>PageRank</strong></p>
+        </div>
+
+        {% if results %}
+        <div class="results-list">
+            {% for product in results %}
+            <div class="product-card">
+                <div class="product-rank">#{{ loop.index }}</div>
+                <div class="product-info">
+                    <h3 class="product-name">{{ product.nombre }}</h3>
+                    <div class="product-tags">
+                        {% for tag in product.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="product-price">${{ product.precio }}</div>
+                <div class="product-score">
+                    <div class="score-circle" style="--score: {{ product.score }}">
+                        <span class="score-value">{{ product.score }}%</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">
+            <span class="no-results-icon">🔍</span>
+            <h3>Sin resultados</h3>
+            <p>No se encontraron productos para "{{ query }}"</p>
+            <a href="/dashboard" class="btn btn-primary">Volver</a>
+        </div>
+        {% endif %}
+
+        <!-- Publicidad -->
+        <section class="card">
+            <h3>📢 Publicidad</h3>
+            <div class="ads-row">
+                {% for ad in ads %}
+                <div class="ad-chip" style="background: {{ ad.color }}22; border-color: {{ ad.color }}">
+                    <span>{{ ad.emoji }}</span>
+                    <span>{{ ad.categoria }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Perfil Actualizado -->
+        <section class="card">
+            <h3>📊 Perfil Actualizado</h3>
+            <div class="profile-bars">
+                {% for tag, value in perfil %}
+                <div class="profile-bar-item">
+                    <div class="bar-header">
+                        <span class="bar-label">{{ tag | capitalize }}</span>
+                        <span class="bar-value">{{ (value * 100) | round(0) | int }}%</span>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill"
+                            style="width: {{ (value * 100) | round(0) }}%; --bar-hue: {{ loop.index0 * 36 }}"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

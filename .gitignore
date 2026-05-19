@@ -1,2 +1,31 @@
-.vscode/settings.json
-*.pyc
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Entorno virtual
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Flask
+instance/
+*.db
+
+# Misc
+*.log
+.env

@@ -1,11 +1,8 @@
 import networkx as nx
 
-def compute_pagerank(G, alpha=0.85, personalization=None, max_iter=100, tol=1e-06,
-                     nstart=None, weight='weight', dangling=None):
+def compute_pagerank(G, alpha=0.85, personalization=None, max_iter=100, tol=1e-06, nstart=None, weight='weight', dangling=None):
+    
     """
-    Envoltorio para networkx.pagerank que recibe los mismos parámetros y
-    devuelve el diccionario de puntuaciones PageRank.
-
     Parámetros:
     -----------
     G : NetworkX graph
@@ -24,12 +21,8 @@ def compute_pagerank(G, alpha=0.85, personalization=None, max_iter=100, tol=1e-0
         Nombre del atributo de arista que se usa como peso.
     dangling : dict, optional
         Diccionario para asignar PageRank a nodos sin enlaces salientes.
-
-    Retorna:
-    --------
-    pagerank : dict
-        Diccionario con nodos como claves y sus puntuaciones PageRank.
     """
+    
     return nx.pagerank(
         G=G,
         alpha=alpha,

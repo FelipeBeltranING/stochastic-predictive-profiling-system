@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — {{ nombre }}{% endblock %}
+{% block body %}
+<div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+        <h1 class="logo">🔍 Sistema de Perfilado</h1>
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Buscar productos..." class="search-input" autocomplete="off">
+            <button type="submit" class="btn btn-search">Buscar</button>
+        </form>
+        <div class="header-right">
+            <span class="user-badge">👤 {{ nombre }}</span>
+            <a href="/logout" class="btn btn-logout">Salir</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-simple">
+        <section class="welcome-section">
+            <h2>¡Bienvenido, {{ nombre }}!</h2>
+            <p>Busca productos y el sistema personaliza los resultados según tu perfil con <strong>PageRank</strong>.
+            </p>
+            <p class="hint">💡 Prueba: <a href="/search?q=electronica">electrónica</a>, <a
+                    href="/search?q=deportes">deportes</a>, <a href="/search?q=musica">música</a>, <a
+                    href="/search?q=">ver todos</a></p>
+        </section>
+
+        <!-- Perfil de Intereses -->
+        <section class="card">
+            <h3>📊 Tu Perfil de Intereses</h3>
+            <div class="profile-bars">
+                {% for tag, value in perfil %}
+                <div class="profile-bar-item">
+                    <div class="bar-header">
+                        <span class="bar-label">{{ tag | capitalize }}</span>
+                        <span class="bar-value">{{ (value * 100) | round(0) | int }}%</span>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill"
+                            style="width: {{ (value * 100) | round(0) }}%; --bar-hue: {{ loop.index0 * 36 }}"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Publicidad Personalizada -->
+        <section class="card">
+            <h3>📢 Publicidad Personalizada <span class="badge">Cola de Prioridad</span></h3>
+            <div class="ads-grid">
+                {% for ad in ads %}
+                <div class="ad-card" style="--ad-color: {{ ad.color }}">
+                    <div class="ad-banner"
+                        style="background: linear-gradient(135deg, {{ ad.color }}, {{ ad.color }}dd)">
+                        <span class="ad-emoji">{{ ad.emoji }}</span>
+                    </div>
+                    <div class="ad-info">
+                        <span class="ad-category">{{ ad.categoria }}</span>
+                        <span class="ad-priority-small">Prioridad: {{ ad.prioridad }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
