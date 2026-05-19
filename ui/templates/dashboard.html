@@ -4,84 +4,65 @@
 <div class="app-layout">
     <!-- Header -->
     <header class="app-header">
-        <div class="header-left">
-            <h1 class="logo">🔍 Sistema de Perfilado</h1>
-        </div>
-        <div class="header-center">
-            <form action="/search" method="GET" class="search-form">
-                <input type="text" name="q" placeholder="Buscar productos... (ej: laptop, deportes, musica)" class="search-input" autocomplete="off">
-                <button type="submit" class="btn btn-search">Buscar</button>
-            </form>
-        </div>
+        <h1 class="logo">🔍 Sistema de Perfilado</h1>
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Buscar productos..." class="search-input" autocomplete="off">
+            <button type="submit" class="btn btn-search">Buscar</button>
+        </form>
         <div class="header-right">
             <span class="user-badge">👤 {{ nombre }}</span>
-            <a href="/logout" class="btn btn-logout">Cerrar Sesión</a>
+            <a href="/logout" class="btn btn-logout">Salir</a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <div class="main-content">
-        <!-- Content Area -->
-        <main class="content-area">
-            <div class="welcome-section">
-                <h2>¡Bienvenido, {{ nombre }}! 👋</h2>
-                <p>Utiliza el buscador para encontrar productos. Los resultados se personalizan según tu perfil usando el algoritmo <strong>PageRank</strong>.</p>
-                <p class="hint">💡 Prueba buscando: <a href="/search?q=electronica">electrónica</a>, <a href="/search?q=deportes">deportes</a>, <a href="/search?q=musica">música</a>, <a href="/search?q=">ver todos</a></p>
-            </div>
+    <div class="main-simple">
+        <section class="welcome-section">
+            <h2>¡Bienvenido, {{ nombre }}!</h2>
+            <p>Busca productos y el sistema personaliza los resultados según tu perfil con <strong>PageRank</strong>.
+            </p>
+            <p class="hint">💡 Prueba: <a href="/search?q=electronica">electrónica</a>, <a
+                    href="/search?q=deportes">deportes</a>, <a href="/search?q=musica">música</a>, <a
+                    href="/search?q=">ver todos</a></p>
+        </section>
 
-            <!-- Publicidad Personalizada -->
-            <section class="ads-section">
-                <h3>📢 Publicidad Personalizada <span class="badge">Cola de Prioridad</span></h3>
-                <p class="section-desc">Anuncios ordenados según tu perfil usando una cola de prioridad (heapq)</p>
-                <div class="ads-grid">
-                    {% for ad in ads %}
-                    <div class="ad-card" style="--ad-color: {{ ad.color }}">
-                        <div class="ad-banner" style="background: linear-gradient(135deg, {{ ad.color }}, {{ ad.color }}dd)">
-                            <span class="ad-emoji">{{ ad.emoji }}</span>
-                        </div>
-                        <div class="ad-info">
-                            <span class="ad-category">{{ ad.categoria }}</span>
-                            <div class="ad-priority">
-                                <span class="priority-label">Prioridad:</span>
-                                <span class="priority-value">{{ ad.prioridad }}</span>
-                            </div>
-                        </div>
+        <!-- Perfil de Intereses -->
+        <section class="card">
+            <h3>📊 Tu Perfil de Intereses</h3>
+            <div class="profile-bars">
+                {% for tag, value in perfil %}
+                <div class="profile-bar-item">
+                    <div class="bar-header">
+                        <span class="bar-label">{{ tag | capitalize }}</span>
+                        <span class="bar-value">{{ (value * 100) | round(0) | int }}%</span>
                     </div>
-                    {% endfor %}
-                </div>
-            </section>
-        </main>
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="profile-card">
-                <h3>📊 Tu Perfil de Intereses</h3>
-                <p class="profile-desc">Se actualiza con cada búsqueda</p>
-                <div class="profile-bars">
-                    {% for tag, value in perfil %}
-                    <div class="profile-bar-item">
-                        <div class="bar-header">
-                            <span class="bar-label">{{ tag | capitalize }}</span>
-                            <span class="bar-value">{{ (value * 100) | round(0) | int }}%</span>
-                        </div>
-                        <div class="bar-track">
-                            <div class="bar-fill" style="width: {{ (value * 100) | round(0) }}%; --bar-hue: {{ loop.index0 * 36 }}"></div>
-                        </div>
+                    <div class="bar-track">
+                        <div class="bar-fill"
+                            style="width: {{ (value * 100) | round(0) }}%; --bar-hue: {{ loop.index0 * 36 }}"></div>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
             </div>
+        </section>
 
-            <div class="info-card">
-                <h3>ℹ️ ¿Cómo funciona?</h3>
-                <ul class="info-list">
-                    <li><strong>PageRank:</strong> Rankea productos construyendo un grafo de relaciones por tags compartidos</li>
-                    <li><strong>Personalización:</strong> Tu perfil sesga los resultados hacia tus intereses</li>
-                    <li><strong>Cola de prioridad:</strong> Los anuncios se ordenan con heapq según tu perfil</li>
-                    <li><strong>Perfil dinámico:</strong> Cada búsqueda actualiza tus intereses</li>
-                </ul>
+        <!-- Publicidad Personalizada -->
+        <section class="card">
+            <h3>📢 Publicidad Personalizada <span class="badge">Cola de Prioridad</span></h3>
+            <div class="ads-grid">
+                {% for ad in ads %}
+                <div class="ad-card" style="--ad-color: {{ ad.color }}">
+                    <div class="ad-banner"
+                        style="background: linear-gradient(135deg, {{ ad.color }}, {{ ad.color }}dd)">
+                        <span class="ad-emoji">{{ ad.emoji }}</span>
+                    </div>
+                    <div class="ad-info">
+                        <span class="ad-category">{{ ad.categoria }}</span>
+                        <span class="ad-priority-small">Prioridad: {{ ad.prioridad }}</span>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-        </aside>
+        </section>
     </div>
 </div>
 {% endblock %}

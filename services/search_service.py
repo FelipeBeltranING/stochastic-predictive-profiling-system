@@ -1,19 +1,16 @@
-# services/search_service.py
-"""
-Motor de búsqueda predictivo basado en PageRank personalizado.
-Utiliza el perfil del usuario para personalizar el ranking de productos.
-"""
 import networkx as nx
 from core.pagerank import compute_pagerank
 from database.data_store import productos
 
 
 def build_product_graph(product_ids=None):
+
     """
     Construye un grafo dirigido donde:
     - Nodos = productos
     - Aristas = productos que comparten tags (peso proporcional a tags compartidos)
     """
+    
     G = nx.DiGraph()
 
     if product_ids:
@@ -39,11 +36,6 @@ def build_product_graph(product_ids=None):
 
 
 def get_personalization_vector(graph, user_profile):
-    """
-    Genera el vector de personalización para PageRank.
-    Cada nodo recibe un peso según cuánto coinciden sus tags
-    con los intereses del usuario.
-    """
     personalization = {}
     for node in graph.nodes():
         product = productos[node]
@@ -54,19 +46,9 @@ def get_personalization_vector(graph, user_profile):
 
 
 def search_products(query, user_profile):
-    """
-    Motor de búsqueda predictivo:
-    1. Filtra productos que coincidan con la query
-    2. Construye grafo de relaciones entre productos
-    3. Ejecuta PageRank personalizado
-    4. Retorna productos ordenados por relevancia
-
-    Returns:
-        tuple: (lista de productos rankeados, tags de búsqueda)
-    """
     query = query.lower().strip()
 
-    # Filtrar productos
+    # Filtrar
     matching_ids = []
     for pid, product in productos.items():
         name_match = query in product["nombre"].lower()
@@ -77,7 +59,7 @@ def search_products(query, user_profile):
     if not matching_ids:
         return [], []
 
-    # Tags de los productos encontrados
+    # Tags productos
     search_tags = set()
     for pid in matching_ids:
         search_tags.update(productos[pid]["tags"])
@@ -85,7 +67,7 @@ def search_products(query, user_profile):
     # Construir grafo
     G = build_product_graph(matching_ids)
 
-    # PageRank personalizado
+    # PageRank de cada uno
     personalization = get_personalization_vector(G, user_profile)
 
     try:

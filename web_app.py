@@ -7,13 +7,11 @@ from database.data_store import usuarios, update_user_profile
 app = Flask(__name__, template_folder="ui/templates", static_folder="ui/static")
 app.secret_key = 'stochastic_profiling_lab_2024'
 
-
 @app.route('/')
 def login_page():
     if 'username' in session:
         return redirect(url_for('dashboard'))
     return render_template('login.html')
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -28,7 +26,6 @@ def login():
     else:
         return render_template('login.html', error=result["message"])
 
-
 @app.route('/dashboard')
 def dashboard():
     if 'username' not in session:
@@ -38,17 +35,15 @@ def dashboard():
     user_data = usuarios[username]
     perfil = user_data["perfil"]
 
-    # Publicidad ordenada por cola de prioridad
+    # Publicidad ordenada
     ads = get_prioritized_ads(perfil, top_n=5)
 
-    # Perfil ordenado por nivel de interés
     sorted_profile = sorted(perfil.items(), key=lambda x: x[1], reverse=True)
 
     return render_template('dashboard.html',
                            nombre=session['nombre'],
                            perfil=sorted_profile,
                            ads=ads)
-
 
 @app.route('/search')
 def search():
@@ -62,11 +57,11 @@ def search():
 
     results, search_tags = search_products(query, perfil)
 
-    # Actualizar perfil del usuario según búsqueda
+    # Actualizar perfil segun busqueda
     if search_tags:
         update_user_profile(username, search_tags)
 
-    # Publicidad para sidebar
+    # Publicidad
     ads = get_prioritized_ads(perfil, top_n=3)
 
     # Perfil actualizado

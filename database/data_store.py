@@ -50,9 +50,9 @@ usuarios = {
             "jardin": 0.0
         }
     },
-    "panneso": {
-        "nombre": "Panneso",
-        "password": "pann2024",
+    "panesso": {
+        "nombre": "Panesso",
+        "password": "pane2024",
         "perfil": {
             "hogar": 0.95,
             "jardin": 0.85,
@@ -69,7 +69,7 @@ usuarios = {
 }
 
 
-# Productos / Servicios
+# Productos 
 
 productos = {
     1: {"nombre": "Laptop Gamer", "tags": ["electronica", "juegos"], "precio": 1200},
@@ -93,7 +93,7 @@ productos = {
 }
 
 
-# Publicidad (imágenes)
+# Publicidad
 
 publicidad = {
     1: {"imagen": "anuncio_electronica.jpg", "tags": ["electronica"], "prioridad_base": 0.5},
@@ -110,17 +110,6 @@ publicidad = {
 
 
 def update_user_profile(username, search_tags, boost=0.05):
-    """
-    Actualiza el perfil del usuario basándose en los tags de la búsqueda.
-    - Los tags buscados reciben un incremento (boost)
-    - Los tags no buscados sufren un leve decaimiento
-    - Los valores se mantienen en el rango [0, 1]
-
-    Args:
-        username (str): Nombre de usuario
-        search_tags (list): Tags relacionados con la búsqueda
-        boost (float): Incremento para tags buscados
-    """
     if username not in usuarios:
         return
 
