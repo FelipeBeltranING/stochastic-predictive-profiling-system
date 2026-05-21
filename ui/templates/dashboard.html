@@ -4,13 +4,12 @@
 <div class="app-layout">
     <!-- Header -->
     <header class="app-header">
-        <h1 class="logo">🔍 Sistema de Perfilado</h1>
+        <h1 class="logo">Sistema de Perfilado</h1>
         <form action="/search" method="GET" class="search-form">
             <input type="text" name="q" placeholder="Buscar productos..." class="search-input" autocomplete="off">
             <button type="submit" class="btn btn-search">Buscar</button>
         </form>
         <div class="header-right">
-            <span class="user-badge">👤 {{ nombre }}</span>
             <a href="/logout" class="btn btn-logout">Salir</a>
         </div>
     </header>
@@ -18,14 +17,13 @@
     <!-- Main Content -->
     <div class="main-simple">
         <section class="welcome-section">
-            <h2>¡Bienvenido, {{ nombre }}!</h2>
-            <p>Busca productos y el sistema personaliza los resultados según tu perfil con <strong>PageRank</strong>.
-            </p>
+            <h2>Usuario: {{ nombre }}</h2>
+            <p>Este sistema personaliza los resultados según el perfil con PageRank.</p>
         </section>
 
         <!-- Perfil de Intereses -->
         <section class="card">
-            <h3>📊 Tu Perfil de Intereses</h3>
+            <h3>Tu Perfil de Intereses</h3>
             <div class="profile-bars">
                 {% for tag, value in perfil %}
                 <div class="profile-bar-item">
@@ -44,7 +42,7 @@
 
         <!-- Publicidad Personalizada -->
         <section class="card">
-            <h3>📢 Publicidad Personalizada <span class="badge">Cola de Prioridad</span></h3>
+            <h3>Publicidad Personalizada <span class="badge">Cola de Prioridad</span></h3>
             <div class="ads-grid">
                 {% for ad in ads %}
                 <div class="ad-card" style="--ad-color: {{ ad.color }}">

@@ -4,14 +4,13 @@
 <div class="app-layout">
     <!-- Header -->
     <header class="app-header">
-        <a href="/dashboard" class="logo">🔍 Sistema de Perfilado</a>
+        <a href="/dashboard" class="logo">Sistema de Perfilado</a>
         <form action="/search" method="GET" class="search-form">
             <input type="text" name="q" value="{{ query }}" placeholder="Buscar productos..." class="search-input"
                 autocomplete="off">
             <button type="submit" class="btn btn-search">Buscar</button>
         </form>
         <div class="header-right">
-            <span class="user-badge">👤 {{ nombre }}</span>
             <a href="/logout" class="btn btn-logout">Salir</a>
         </div>
     </header>
@@ -57,7 +56,7 @@
 
         <!-- Publicidad -->
         <section class="card">
-            <h3>📢 Publicidad</h3>
+            <h3>Publicidad</h3>
             <div class="ads-row">
                 {% for ad in ads %}
                 <div class="ad-chip" style="background: {{ ad.color }}22; border-color: {{ ad.color }}">
@@ -70,7 +69,7 @@
 
         <!-- Perfil Actualizado -->
         <section class="card">
-            <h3>📊 Perfil Actualizado</h3>
+            <h3>Perfil Actualizado</h3>
             <div class="profile-bars">
                 {% for tag, value in perfil %}
                 <div class="profile-bar-item">
