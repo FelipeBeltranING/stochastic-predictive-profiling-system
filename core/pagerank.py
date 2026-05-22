@@ -18,7 +18,7 @@ def compute_pagerank(G, alpha=0.85, personalization=None, max_iter=100, tol=1e-0
         suma_dangling = 0.0 
 
         for nodo in nodos:
-            out_edges = G.out_edges(nodo, data=True)
+            out_edges = list(G.out_edges(nodo, data=True))
             
             if len(out_edges) == 0:
                 suma_dangling += pagerank[nodo]
