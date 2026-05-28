@@ -20,7 +20,7 @@ usuarios = {
     },
     "beltran": {
         "nombre": "Beltrán",
-        "password": "belt2024",
+        "password": "belt2026",
         "perfil": {
             "deportes": 0.95,
             "moda": 0.7,
@@ -36,7 +36,7 @@ usuarios = {
     },
     "pineda": {
         "nombre": "Pineda",
-        "password": "pine2024",
+        "password": "pine2026",
         "perfil": {
             "libros": 0.95,
             "musica": 0.9,
@@ -52,7 +52,7 @@ usuarios = {
     },
     "panesso": {
         "nombre": "Panesso",
-        "password": "pane2024",
+        "password": "pane2026",
         "perfil": {
             "hogar": 0.95,
             "jardin": 0.85,
