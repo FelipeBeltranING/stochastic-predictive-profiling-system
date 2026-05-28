@@ -15,11 +15,6 @@ AD_THEMES = {
 }
 
 def get_prioritized_ads(user_profile, top_n=5):
-    """
-    Ordena los anuncios usando una Cola de Prioridad (heap)
-    según el perfil del usuario.  
-    """
-    
     priority_queue = []
 
     for ad_id, ad in publicidad.items():

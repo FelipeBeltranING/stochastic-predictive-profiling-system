@@ -4,13 +4,6 @@ from database.data_store import productos
 
 
 def build_product_graph(product_ids=None):
-
-    """
-    Construye un grafo dirigido donde:
-    - Nodos = productos
-    - Aristas = productos que comparten tags (peso proporcional a tags compartidos)
-    """
-    
     G = nx.DiGraph()
 
     if product_ids:
